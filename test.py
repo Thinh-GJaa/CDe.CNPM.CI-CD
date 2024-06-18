@@ -1,6 +1,6 @@
 def hello_world():
     """Print 'Hello, World!' to the console."""
-    print("Hello, World!")
+    pint("Hello, World!")
 
 
 if __name__ == "__main__":
