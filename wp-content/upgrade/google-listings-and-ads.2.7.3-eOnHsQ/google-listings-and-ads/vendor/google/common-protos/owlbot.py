@@ -70,8 +70,9 @@ if os.path.exists("metadata/Google"):
 
 s.replace(
     "src/**/*.php",
-    r"""^// Adding a class alias for backwards compatibility with the previous class name\.$
-    ^class_alias\(.*\);$""",
+    r"^// Adding a class alias for backwards compatibility with the previous class name\.$"
+    r"\n"
+    r"^class_alias\(.*\);$"
+    r"\n",
     '')
-
 
