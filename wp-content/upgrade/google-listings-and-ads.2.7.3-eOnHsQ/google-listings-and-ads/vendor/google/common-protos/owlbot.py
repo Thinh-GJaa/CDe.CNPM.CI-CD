@@ -17,7 +17,7 @@
 import logging
 from pathlib import Path
 import shutil
-import subprocess
+
 
 import os
 import synthtool as s
@@ -31,9 +31,9 @@ protos = [
     ("api", "api"),
     ("extendedoperations", "cloud"),
     ("location", "cloud"),
-    ("logging", "google"), # for the metadata
+    ("logging", "google"),  # for the metadata
     ("logging", "cloud"),
-    ("iam", "google"), # for the metadata
+    ("iam", "google"), #  for the metadata
     ("iam", "cloud"),
     ("iamlogging", "iam"),
     ("rpc", "rpc"),
