@@ -17,7 +17,6 @@
 import logging
 from pathlib import Path
 import shutil
-import subprocess
 
 import os
 import synthtool as s
@@ -31,9 +30,9 @@ protos = [
     ("api", "api"),
     ("extendedoperations", "cloud"),
     ("location", "cloud"),
-    ("logging", "google"), # for the metadata
+    ("logging", "google"),  # for the metadata
     ("logging", "cloud"),
-    ("iam", "google"), # for the metadata
+    ("iam", "google"),  # for the metadata
     ("iam", "cloud"),
     ("iamlogging", "iam"),
     ("rpc", "rpc"),
@@ -58,7 +57,6 @@ for proto in protos:
         ],
     )
 
-# move metadata to more specific directories (owlbot isnt smart enough to do this)
 s.move("metadata/Google/Iam/V1", "metadata/Iam/V1")
 s.move("metadata/Google/Logging/Type", "metadata/Logging/Type")
 
@@ -71,10 +69,8 @@ if os.path.exists("metadata/Google"):
     shutil.rmtree(Path("metadata/Google"))
 
 s.replace(
-    "src/**/*.php",
-    r"^// Adding a class alias for backwards compatibility with the previous class name.$"
-    + "\n"
-    + r"^class_alias\(.*\);$"
-    + "\n",
+    'src/**/*.php',
+    r"^// Adding a class alias for backwards compatibility with the previous class name.$\n"
+    r"^class_alias\(.*\);$"
+    r"\n",
     '')
-
