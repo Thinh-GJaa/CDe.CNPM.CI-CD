@@ -17,12 +17,12 @@
 import logging
 from pathlib import Path
 import shutil
-
+import subprocess
 
 import os
-import synthtool as s # type: ignore
-from synthtool.languages import php # type: ignore
-from synthtool import _tracked_paths # type: ignore
+import synthtool as s
+from synthtool.languages import php
+from synthtool import _tracked_paths
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -31,9 +31,9 @@ protos = [
     ("api", "api"),
     ("extendedoperations", "cloud"),
     ("location", "cloud"),
-    ("logging", "google"),  #for the metadata
+    ("logging", "google"), # for the metadata
     ("logging", "cloud"),
-    ("iam", "google"),  #for the metadata
+    ("iam", "google"), # for the metadata
     ("iam", "cloud"),
     ("iamlogging", "iam"),
     ("rpc", "rpc"),
@@ -58,8 +58,7 @@ for proto in protos:
         ],
     )
 
-# move metadata to more specific directories 
-# (owlbot isnt smart enough to do this)
+# move metadata to more specific directories (owlbot isnt smart enough to do this)
 s.move("metadata/Google/Iam/V1", "metadata/Iam/V1")
 s.move("metadata/Google/Logging/Type", "metadata/Logging/Type")
 
