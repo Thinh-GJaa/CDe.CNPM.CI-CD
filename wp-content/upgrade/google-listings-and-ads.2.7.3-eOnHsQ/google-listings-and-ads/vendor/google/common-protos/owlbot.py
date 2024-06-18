@@ -69,8 +69,9 @@ if os.path.exists("metadata/Google"):
     shutil.rmtree(Path("metadata/Google"))
 
 s.replace(
-    'src/**/*.php',
-    r"^// Adding a class alias for backwards compatibility with the previous class name.$\n"
-    r"^class_alias\(.*\);$"
-    r"\n",
+    "src/**/*.php",
+    r"""^// Adding a class alias for backwards compatibility with the previous class name\.$
+    ^class_alias\(.*\);$""",
     '')
+
+
