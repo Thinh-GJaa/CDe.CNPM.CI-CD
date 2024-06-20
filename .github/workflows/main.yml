@@ -16,16 +16,15 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'  # Thay đổi phiên bản PHP nếu cần thiết
+          php-version: '8.0.30'  # Sử dụng PHP phiên bản 8.0.30
 
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Install PHPUnit compatible with PHP 7.4
+      - name: Install PHPUnit compatible with PHP 8.0
         run: |
-          wget https://phar.phpunit.de/phpunit-9.5.0.phar
-          chmod +x phpunit-9.5.0.phar
-          sudo mv phpunit-9.5.0.phar /usr/local/bin/phpunit
+          composer require --dev phpunit/phpunit:^9
+          ./vendor/bin/phpunit --version
 
       - name: Run tests with PHPUnit
-        run: phpunit
+        run: ./vendor/bin/phpunit
