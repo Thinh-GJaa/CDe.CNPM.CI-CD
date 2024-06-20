@@ -26,4 +26,7 @@ jobs:
           composer install --no-dev --prefer-dist --optimize-autoloader
 
       - name: Run PHP_CodeSniffer
-        run: ./vendor/bin/phpcs --standard=phpcs.xml.dist .
+        uses: squizlabs/PHP_CodeSniffer@v3
+        with:
+          standard: phpcs.xml.dist
+          ignore_warnings: false
