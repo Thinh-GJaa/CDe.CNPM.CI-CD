@@ -21,16 +21,19 @@ jobs:
         with:
           php-version: '8.0'
 
-      - name: Install Composer
+      - name: Self-update Composer
+        run: composer self-update
+
+      - name: Install Composer dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader
 
-      - name: List composer dependencies
+      - name: Show Composer output
         run: composer show
 
-      - name: Check vendor directory
+      - name: List vendor directory
         run: ls -la ./vendor
 
-      - name: Check bin directory
+      - name: List bin directory
         run: ls -la ./vendor/bin
 
       - name: Run PHP_CodeSniffer
