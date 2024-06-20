@@ -16,10 +16,11 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v2
 
-      - name: Set up PHP
+      - name: Set up PHPcomposer install
+
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.0.30'
 
       - name: Install Composer dependencies
         run: composer install
