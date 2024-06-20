@@ -21,8 +21,17 @@ jobs:
         with:
           php-version: '8.0'
 
-      - name: Self-update Composer
-        run: composer self-update
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache Composer Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
 
       - name: Install Composer dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader
@@ -32,9 +41,6 @@ jobs:
 
       - name: Add Composer global bin to PATH
         run: echo "$(composer global config --absolute home)/vendor/bin" >> $GITHUB_PATH
-
-      - name: Show Composer global bin directory
-        run: ls -la $(composer global config --absolute home)/vendor/bin
 
       - name: Run PHP_CodeSniffer
         run: phpcs --standard=phpcs.xml.dist .
