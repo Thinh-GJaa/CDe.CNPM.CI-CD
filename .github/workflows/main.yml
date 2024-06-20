@@ -1,4 +1,4 @@
-name: CI/CD Pi
+name: PHP_CodeSniffer
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  lint:
+  phpcs:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,14 +19,11 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0.30'
+          php-version: '7.4'
 
       - name: Install Composer dependencies
         run: |
           composer install --no-dev --prefer-dist --optimize-autoloader
 
-      - name: Make phpcs executable
-        run: chmod +x ./vendor/bin/phpcs
-
       - name: Run PHP_CodeSniffer
-        run: ./vendor/bin/phpcs --standard=PSR12 .
+        run: ./vendor/bin/phpcs --standard=phpcs.xml.dist .
