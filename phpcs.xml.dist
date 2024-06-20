@@ -9,6 +9,5 @@
     <exclude-pattern>vendor/</exclude-pattern>
     <exclude-pattern>wp-content/</exclude-pattern>
     <exclude-pattern>wp-includes/</exclude-pattern>
-    <exclude-pattern>node_modules/</exclude-pattern>
     <exclude-pattern>.git/</exclude-pattern>
 </ruleset>
