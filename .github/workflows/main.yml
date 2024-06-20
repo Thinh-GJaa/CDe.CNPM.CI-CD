@@ -19,14 +19,11 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.0.30'
 
       - name: Install Composer dependencies
         run: |
           composer install --no-dev --prefer-dist --optimize-autoloader
 
       - name: Run PHP_CodeSniffer
-        uses: squizlabs/PHP_CodeSniffer@v3
-        with:
-          standard: phpcs.xml.dist
-          ignore_warnings: false
+        run: ./vendor/bin/phpcs --standard=phpcs.xml.dist .
