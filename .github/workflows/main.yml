@@ -21,11 +21,11 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Install PHPUnit
+      - name: Install PHPUnit compatible with PHP 7.4
         run: |
-          wget https://phar.phpunit.de/phpunit.phar
-          chmod +x phpunit.phar
-          sudo mv phpunit.phar /usr/local/bin/phpunit
+          wget https://phar.phpunit.de/phpunit-9.5.0.phar
+          chmod +x phpunit-9.5.0.phar
+          sudo mv phpunit-9.5.0.phar /usr/local/bin/phpunit
 
       - name: Run tests with PHPUnit
         run: phpunit
