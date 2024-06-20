@@ -31,7 +31,7 @@ jobs:
         run: composer global require squizlabs/php_codesniffer
 
       - name: Add Composer global bin to PATH
-        run: echo "::add-path::$(composer global config --absolute home)/vendor/bin"
+        run: echo "$(composer global config --absolute home)/vendor/bin" >> $GITHUB_PATH
 
       - name: Show Composer global bin directory
         run: ls -la $(composer global config --absolute home)/vendor/bin
