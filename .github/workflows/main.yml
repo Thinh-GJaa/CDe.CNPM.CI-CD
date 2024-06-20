@@ -1,15 +1,12 @@
-name: PHP_CodeSniffer
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main  # Adjust this to your main branch name
 
 jobs:
-  phpcs:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,28 +16,21 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '7.4'  # Adjust to your PHP version
 
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Install dependencies
+        run: |
+          composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Cache Composer Dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
+      - name: Run tests
+        run: |
+          # Replace with your test command (e.g., PHPUnit)
+          phpunit
 
-      - name: Install Composer dependencies
-        run: composer install --no-dev --prefer-dist --optimize-autoloader
+      - name: Deploy to staging
+        if: success()
+        run: |
+          # Replace with your deployment script or commands
+          # Example: Deploy to staging server using SSH
+          ssh user@staging-server 'cd /path/to/project && git pull origin main && composer install && php artisan migrate'
 
-      - name: Install PHP_CodeSniffer globally
-        run: composer global require squizlabs/php_codesniffer
-
-      - name: Add Composer global bin to PATH
-        run: echo "$(composer global config --absolute home)/vendor/bin" >> $GITHUB_PATH
-
-      - name: Run PHP_CodeSniffer
-        run: phpcs --standard=phpcs.xml.dist .
