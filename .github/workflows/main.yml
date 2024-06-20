@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Simple CI/CD Pipeline
 
 on:
   push:
@@ -16,33 +16,10 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0.30'  # Sử dụng PHP phiên bản 8.0.30
+          php-version: '8.0'  # Sử dụng PHP phiên bản 8.0
 
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Set up WordPress
-        run: |
-          wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-          chmod +x wp-cli.phar
-          sudo mv wp-cli.phar /usr/local/bin/wp
-          wp core download --allow-root
-
-      - name: Set up database
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y mariadb-server
-          sudo service mysql start
-          mysql -e 'CREATE DATABASE wordpress_test;'
-          mysql -e "CREATE USER 'wp'@'localhost' IDENTIFIED BY 'password';"
-          mysql -e "GRANT ALL PRIVILEGES ON wordpress_test.* TO 'wp'@'localhost';"
-          mysql -e 'FLUSH PRIVILEGES;'
-
-      - name: Run WordPress tests
-        run: |
-          wp core config --dbname=wordpress_test --dbuser=wp --dbpass=password --dbhost=localhost --allow-root
-          wp core install --url=http://localhost --title=TestSite --admin_user=admin --admin_password=admin_password --admin_email=test@example.com --allow-root
-          # Add any custom test commands here, for example:
-          # wp plugin activate my-plugin --allow-root
-          # wp theme activate my-theme --allow-root
-          # wp test --allow-root
+      - name: Run PHPUnit
+        run: ./vendor/bin/phpunit
