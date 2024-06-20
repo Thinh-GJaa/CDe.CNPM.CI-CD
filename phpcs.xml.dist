@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress">
+    <description>WordPress Coding Standards</description>
+    
+    <!-- Use PSR12 standard -->
+    <rule ref="PSR12"/>
+
+    <!-- Exclude files and directories you do not want to check -->
+    <exclude-pattern>vendor/</exclude-pattern>
+    <exclude-pattern>wp-content/</exclude-pattern>
+    <exclude-pattern>wp-includes/</exclude-pattern>
+    <exclude-pattern>node_modules/</exclude-pattern>
+    <exclude-pattern>.git/</exclude-pattern>
+</ruleset>
