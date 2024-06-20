@@ -27,14 +27,14 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader
 
-      - name: Show Composer output
-        run: composer show
+      - name: Install PHP_CodeSniffer globally
+        run: composer global require squizlabs/php_codesniffer
 
-      - name: List vendor directory
-        run: ls -la ./vendor
+      - name: Add Composer global bin to PATH
+        run: echo "::add-path::$(composer global config --absolute home)/vendor/bin"
 
-      - name: List bin directory
-        run: ls -la ./vendor/bin
+      - name: Show Composer global bin directory
+        run: ls -la $(composer global config --absolute home)/vendor/bin
 
       - name: Run PHP_CodeSniffer
-        run: ./vendor/bin/phpcs --standard=phpcs.xml.dist .
+        run: phpcs --standard=phpcs.xml.dist .
