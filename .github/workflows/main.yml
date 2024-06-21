@@ -5,6 +5,10 @@ on:
     branches:
       - main  # Thay đổi tên nhánh nếu cần thiết
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,15 +28,20 @@ jobs:
       - name: Run PHPUnit 
         run: ./vendor/bin/phpunit
 
- # Deployment job
+      # Thêm bước build để tạo các tệp tĩnh
+      - name: Build static site
+        run: npm run build  # hoặc lệnh build tương ứng cho dự án của bạn
+
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
-
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./static_site  # Thư mục chứa các tệp tĩnh sau khi build
